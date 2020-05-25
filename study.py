@@ -33,7 +33,9 @@ def main(argv):
     print("Title of Lecture: ")
     title = input()
 
-    f = open(location + "/" + args[1] + ".tex", "w")
+    texFileLocation = location + "/" + args[1] + ".tex"
+
+    f = open(texFileLocation, "w")
     f.write("\input{preamble}\n")
     f.write("\\title{" + title + "}")
     f.write("\\begin{document}\n")
@@ -41,6 +43,10 @@ def main(argv):
     f.write("\\end{document}\n")
     f.close()
     copyfile("./preamble.tex", location + "/preamble.tex")
+
+    os.system('pdflatex -output-directory '+ location + ' ' + texFileLocation)
+    os.system('evince ' + location + "/" + args[1] + ".pdf" + '&')
+    os.system('vim ' + texFileLocation)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
