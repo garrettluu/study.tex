@@ -44,6 +44,7 @@ def main(argv):
     f.close()
     copyfile("./preamble.tex", location + "/preamble.tex")
 
+    os.chdir(location);
     os.system('pdflatex -output-directory '+ location + ' ' + texFileLocation)
     os.system('evince ' + location + "/" + args[1] + ".pdf" + '&')
     os.system('vim ' + texFileLocation)
