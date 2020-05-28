@@ -14,7 +14,7 @@ def main(argv):
 
     #process args
     try:
-        opts, args = getopt.getopt(argv, "", "")
+        opts, args = getopt.getopt(argv, "e", ['edit'])
     except getopt.GetoptError:
         print("lol u stupid")
         sys.exit(2)
@@ -57,7 +57,8 @@ def main(argv):
         texFileLocation = location + "/" + args[1] + ".tex"
         os.chdir(location);
         os.system('evince ' + location + "/" + args[1] + ".pdf" + '&')
-        os.system('vim ' + texFileLocation)
+        if opts and opts[0] != "-e" and opts[0] != "--edit":
+            os.system('vim ' + texFileLocation)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
