@@ -8,7 +8,8 @@ from shutil import copyfile
 
 def main(argv):
     #default directory for notes
-    directory = os.path.expanduser('~') + "/Documents/studyus-notes/"
+    directory = os.environ.get('STUDYUS') or os.path.expanduser('~') + "/studyus-notes"
+    viewer = os.environ.get('STUDYUS_VIEWER') or "sumatraPDF"
     cls = ''
     fileName = ''
 
@@ -19,7 +20,7 @@ def main(argv):
         print("lol u stupid")
         sys.exit(2)
 
-    location = directory + args[0] + "/" + args[1]
+    location = directory + "/" + args[0] + "/" + args[1]
     if not os.path.exists(directory + args[0]):
         print("Course '" + args[0] + "' does not exist yet. Create it? [Y/n]")
         create = input()
@@ -49,14 +50,14 @@ def main(argv):
 
             os.chdir(location);
             os.system('pdflatex -output-directory '+ location + ' ' + texFileLocation)
-            os.system('evince ' + location + "/" + args[1] + ".pdf" + '&')
+            os.system(viewer + " " + location + "/" + args[1] + ".pdf" + '&')
             os.system('vim ' + texFileLocation)
         else:
             sys.exit(0);
     else:
         texFileLocation = location + "/" + args[1] + ".tex"
         os.chdir(location);
-        os.system('evince ' + location + "/" + args[1] + ".pdf" + '&')
+        os.system(viewer + " " + location + "/" + args[1] + ".pdf" + '&')
         if opts and opts[0] != "-e" and opts[0] != "--edit":
             os.system('vim ' + texFileLocation)
 
