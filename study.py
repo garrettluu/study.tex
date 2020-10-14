@@ -13,6 +13,8 @@ def main(argv):
     cls = ''
     fileName = ''
 
+    directory = directory + "/"
+
     #process args
     try:
         opts, args = getopt.getopt(argv, "e", ['edit'])
@@ -20,7 +22,7 @@ def main(argv):
         print("lol u stupid")
         sys.exit(2)
 
-    location = directory + "/" + args[0] + "/" + args[1]
+    location = directory + args[0] + "/" + args[1]
     if not os.path.exists(directory + args[0]):
         print("Course '" + args[0] + "' does not exist yet. Create it? [Y/n]")
         create = input()
